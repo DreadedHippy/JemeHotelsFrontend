@@ -1,0 +1,63 @@
+<main class="bookings-page">
+  <header class="page-header">
+    <span class="brand">Jeme Hotels</span>
+    <h1>My bookings</h1>
+    <p>View your stays and payment status.</p>
+  </header>
+
+  @if (bookings.isLoading()) {
+    <p class="page-message" role="status">Loading your bookings…</p>
+  } @else if (bookings.error()) {
+    <div class="page-message">
+      <p role="alert">Unable to load your bookings. Please try again.</p>
+      <p-button type="button" label="Try again" (onClick)="bookings.reload()" />
+    </div>
+  } @else {
+    <ul class="bookings-list" aria-label="My bookings">
+      @for (booking of bookings.value() ?? []; track booking.bookingId) {
+        <li class="booking-card">
+          <div class="booking-header">
+            <h2>Booking <span>{{ booking.bookingId }}</span></h2>
+            <span class="payment-status" [class.paid]="booking.isPaid">
+              {{ booking.isPaid ? 'Paid' : 'Unpaid' }}
+            </span>
+          </div>
+          <dl class="booking-details">
+            <div>
+              <dt>Start date</dt>
+              <dd>{{ booking.startDate | date:'mediumDate':'UTC' }}</dd>
+            </div>
+            <div>
+              <dt>Duration</dt>
+              <dd>{{ booking.numberOfDays }} {{ booking.numberOfDays === 1 ? 'day' : 'days' }}</dd>
+            </div>
+            <div>
+              <dt>Total bill</dt>
+              <dd>{{ booking.totalBill | number:'1.2-2' }}</dd>
+            </div>
+          </dl>
+          @if (!booking.isPaid) {
+            <div class="booking-payment">
+              @if (paymentUrls()[booking.bookingId]; as paymentUrl) {
+                <a pButton [href]="paymentUrl" target="_blank" rel="noopener noreferrer">
+                  <span pButtonLabel>Pay now</span>
+                </a>
+                <p role="status">Payment is ready. Pay now opens checkout in a new tab.</p>
+              } @else {
+                <p-button type="button" label="Pay" (onClick)="initializePayment(booking)"
+                  [loading]="initializingBookingId() === booking.bookingId"
+                  [disabled]="initializingBookingId() !== null"
+                  [buttonProps]="{ 'aria-label': 'Pay for booking ' + booking.bookingId }" />
+              }
+              @if (paymentErrors()[booking.bookingId]) {
+                <p class="payment-error" role="alert">{{ paymentErrors()[booking.bookingId] }}</p>
+              }
+            </div>
+          }
+        </li>
+      } @empty {
+        <li class="page-message" role="status">You have no bookings yet.</li>
+      }
+    </ul>
+  }
+</main>

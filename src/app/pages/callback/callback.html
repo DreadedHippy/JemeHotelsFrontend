@@ -1,0 +1,30 @@
+<main class="main">
+  <section class="form" aria-labelledby="payment-heading" [attr.aria-busy]="isVerifying()">
+    <header class="form-header">
+      <span class="brand">Jeme Hotels</span>
+      <h1 id="payment-heading">Payment verification</h1>
+      <p>View the result of your payment.</p>
+    </header>
+
+    @if (isVerifying()) {
+      <p role="status">Verifying your payment…</p>
+    } @else if (verificationError()) {
+      <p role="alert">{{ verificationError() }}</p>
+    } @else if (result(); as payment) {
+      <div role="status">
+        <dl class="payment-result">
+          <div>
+            <dt>Payment status</dt>
+            <dd><span [class.payment-success]="payment.status === 'success'">{{ payment.status }}</span></dd>
+          </div>
+          <div>
+            <dt>Reference</dt>
+            <dd>{{ payment.reference }}</dd>
+          </div>
+        </dl>
+      </div>
+    }
+
+    <p class="auth-link"><a routerLink="/bookings">View my bookings</a></p>
+  </section>
+</main>

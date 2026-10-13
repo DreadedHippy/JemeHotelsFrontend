@@ -1,0 +1,159 @@
+.booking-payment {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  align-self: start;
+  max-width: 14rem;
+  text-align: right;
+
+  p {
+    margin: 0.5rem 0 0;
+    color: var(--p-text-muted-color, #64748b);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .payment-error {
+    color: var(--p-red-600, #dc2626);
+  }
+}
+
+:host {
+  display: block;
+  min-height: 100svh;
+  color: var(--p-text-color, #1e293b);
+  background: var(--p-surface-100, #f1f5f9);
+}
+
+.bookings-page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 5vw, 3rem);
+}
+
+.page-header {
+  margin-bottom: 2rem;
+
+  .brand {
+    color: var(--p-primary-color, #047857);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  h1 {
+    margin: 0.75rem 0 0.5rem;
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    margin: 0;
+    color: var(--p-text-muted-color, #64748b);
+    line-height: 1.6;
+  }
+}
+
+.bookings-list {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.booking-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 1.5rem;
+  padding: clamp(1rem, 4vw, 1.5rem);
+  border: 1px solid var(--p-content-border-color, #e2e8f0);
+  border-radius: 1rem;
+  background: var(--p-content-background, #fff);
+  box-shadow: 0 4px 16px rgb(15 23 42 / 4%);
+  overflow-wrap: anywhere;
+}
+
+.booking-header {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    flex: 1 1 12rem;
+    min-width: 0;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+
+    span {
+      display: block;
+      margin-top: 0.25rem;
+      color: var(--p-text-muted-color, #64748b);
+      font-size: 0.8125rem;
+      font-weight: 400;
+    }
+  }
+}
+
+.payment-status {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--p-content-border-color, #e2e8f0);
+  border-radius: 2rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+
+  &.paid {
+    color: var(--p-primary-color, #047857);
+  }
+}
+
+.booking-details {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: 1rem;
+  margin: 0;
+
+  dt {
+    margin-bottom: 0.25rem;
+    color: var(--p-text-muted-color, #64748b);
+    font-size: 0.8125rem;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (max-width: 40rem) {
+  .booking-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .booking-payment {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 1.25rem;
+    max-width: 100%;
+  }
+}
+
+.page-message {
+  padding: 1.5rem;
+  margin: 0;
+  color: var(--p-text-muted-color, #64748b);
+  line-height: 1.6;
+
+  p {
+    margin: 0 0 1rem;
+  }
+}

@@ -1,0 +1,109 @@
+:host {
+  display: block;
+  color: var(--p-text-color, #1e293b);
+}
+
+.auth-link {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  color: var(--p-text-muted-color, #64748b);
+  font-size: 0.875rem;
+  line-height: 1.6;
+
+  a {
+    color: var(--p-primary-color, #047857);
+    font-weight: 600;
+    text-underline-offset: 0.2em;
+
+    &:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+  }
+}
+
+.main {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: var(--p-surface-100, #f1f5f9);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 26rem;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  background: var(--p-content-background, #fff);
+  border: 1px solid var(--p-content-border-color, #e2e8f0);
+  border-radius: 1rem;
+  box-shadow: 0 12px 36px rgb(15 23 42 / 6%);
+
+  .form-header {
+    margin-bottom: 2rem;
+
+    .brand {
+      color: var(--p-primary-color, #047857);
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      margin: 0.75rem 0 0.5rem;
+      font-size: clamp(1.5rem, 5vw, 1.875rem);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      margin: 0;
+      color: var(--p-text-muted-color, #64748b);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+  }
+
+  label {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    &:not(:first-of-type) {
+      margin-top: 1.25rem;
+    }
+  }
+
+  input,
+  p-password,
+  p-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  input {
+    min-height: 2.75rem;
+  }
+
+  small[role='alert'],
+  p[role='alert'] {
+    margin: 0.5rem 0 0;
+    color: var(--p-red-600, #dc2626);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  p-button {
+    display: block;
+    margin-top: 1.75rem;
+  }
+}

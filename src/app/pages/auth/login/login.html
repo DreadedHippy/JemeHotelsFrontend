@@ -1,0 +1,29 @@
+<main class="main">
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+    <header class="form-header">
+      <span class="brand">Jeme Hotels</span>
+      <h1>Welcome back</h1>
+      <p>Log in to your account.</p>
+    </header>
+
+    <label for="email">Email</label>
+    <input pInputText id="email" type="email" formControlName="email" autocomplete="username" />
+    @if (loginForm.controls.email.dirty && loginForm.controls.email.invalid) {
+      <small role="alert">Enter your email.</small>
+    }
+
+    <label for="password">Password</label>
+    <p-password inputId="password" formControlName="password" autocomplete="current-password"
+      [feedback]="false" [toggleMask]="true" [fluid]="true" />
+    @if (loginForm.controls.password.dirty && loginForm.controls.password.invalid) {
+      <small role="alert">Enter your password.</small>
+    }
+
+    @if (loginError()) {
+      <p role="alert">{{ loginError() }}</p>
+    }
+
+    <p-button type="submit" label="Log in" [loading]="isLoggingIn()" [disabled]="isLoggingIn()" [fluid]="true" />
+    <p class="auth-link">New here? <a routerLink="/register">Register</a></p>
+  </form>
+</main>

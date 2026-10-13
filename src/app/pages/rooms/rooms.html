@@ -1,0 +1,97 @@
+<main class="rooms-page">
+  <header class="page-header">
+    <span class="brand">Jeme Hotels</span>
+    <h1>Rooms</h1>
+    <p>Find a room for your stay.</p>
+  </header>
+
+  @if (roomSrv.rooms.isLoading()) {
+    <p class="page-message" role="status">Loading rooms…</p>
+  } @else if (roomSrv.rooms.error()) {
+    <div class="page-message">
+      <p role="alert">Unable to load rooms. Please try again.</p>
+      <p-button label="Try again" type="button" (onClick)="roomSrv.rooms.reload()" />
+    </div>
+  } @else {
+    <section class="rooms-grid" aria-label="Rooms">
+      @for (room of rooms(); track room.roomID) {
+        <article class="room-card">
+          <span class="room-type">{{ room.roomType | titlecase }}</span>
+          <h2>Room {{ room.roomNumber }}</h2>
+          <dl class="room-details">
+            <div>
+              <dt>Price</dt>
+              <dd>{{ room.price | number:'1.2-2' }}</dd>
+            </div>
+          </dl>
+          <p-button type="button" label="Book" [fluid]="true"
+            (onClick)="openBooking(room)" [disabled]="isBooking() || isInitializingPayment()"/>
+        </article>
+      } @empty {
+        <p class="page-message" role="status">No rooms are available right now.</p>
+      }
+    </section>
+  }
+</main>
+
+<p-dialog [header]="'Book room ' + (selectedRoom()?.roomNumber ?? '')"
+  [(visible)]="bookingDialogVisible" [modal]="true" [draggable]="false" [resizable]="false"
+  [closable]="!isBooking() && !isInitializingPayment()"
+  [closeOnEscape]="!isBooking() && !isInitializingPayment()" [blockScroll]="true"
+  [style]="{ width: '26rem', maxWidth: 'calc(100vw - 2rem)' }">
+  @if (bookedRoom(); as booking) {
+    <section class="payment-prompt" aria-label="Booking payment" [attr.aria-busy]="isInitializingPayment()">
+      <p role="status">Your booking has been created.</p>
+      <dl>
+        <div><dt>Booking ID</dt><dd>{{ booking.id }}</dd></div>
+        <div><dt>Duration</dt><dd>{{ booking.numberOfDays }} {{ booking.numberOfDays === 1 ? 'day' : 'days' }}</dd></div>
+        <div><dt>Total bill</dt><dd>{{ booking.totalBill | number:'1.2-2' }}</dd></div>
+      </dl>
+
+      @if (isInitializingPayment()) {
+        <p role="status">Preparing your payment…</p>
+      }
+      @if (paymentError()) {
+        <p class="payment-error" role="alert">{{ paymentError() }}</p>
+        <p-button type="button" label="Retry payment setup" (onClick)="initializePayment()"
+          [disabled]="isInitializingPayment()" [loading]="isInitializingPayment()" />
+      }
+      @if (payment()) {
+        <p-button type="button" label="Pay for booking" [fluid]="true" (onClick)="payForBooking()" />
+        <p class="payment-hint">Payment opens in a new tab.</p>
+      }
+    </section>
+  } @else {
+    <form class="booking-form" [formGroup]="bookingForm" (ngSubmit)="submitBooking()" novalidate
+    [attr.aria-busy]="isBooking()">
+    <fieldset [disabled]="isBooking()">
+      <label for="booking-start">Start date</label>
+      <p-datepicker inputId="booking-start" formControlName="startDate" dateFormat="yy-mm-dd"
+        [showIcon]="true" [readonlyInput]="true" [fluid]="true" appendTo="body" />
+      @if (bookingForm.controls.startDate.dirty && bookingForm.controls.startDate.invalid) {
+        <small role="alert">Choose a start date.</small>
+      }
+
+      <label for="booking-end">End date</label>
+      <p-datepicker inputId="booking-end" formControlName="endDate" dateFormat="yy-mm-dd"
+        [showIcon]="true" [readonlyInput]="true" [fluid]="true" appendTo="body" />
+      @if (bookingForm.controls.endDate.dirty && bookingForm.controls.endDate.invalid) {
+        <small role="alert">Choose an end date.</small>
+      }
+      @if (bookingForm.controls.endDate.dirty && bookingForm.hasError('invalidDateRange')) {
+        <small role="alert">Choose an end date after the start date.</small>
+      }
+    </fieldset>
+
+    @if (bookingError()) {
+      <p class="booking-error" role="alert">{{ bookingError() }}</p>
+    }
+
+    <div class="booking-actions">
+      <p-button type="button" label="Cancel" severity="secondary" [outlined]="true"
+        [disabled]="isBooking()" (onClick)="bookingDialogVisible = false" />
+      <p-button type="submit" label="Book room" [loading]="isBooking()" [disabled]="isBooking()" />
+    </div>
+    </form>
+  }
+</p-dialog>

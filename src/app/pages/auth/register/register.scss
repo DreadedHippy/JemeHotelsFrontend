@@ -1,0 +1,8 @@
+@use '../login/login';
+
+.success-message {
+  margin: 1rem 0 0;
+  color: var(--p-text-color, #1e293b);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
