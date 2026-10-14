@@ -47,7 +47,7 @@
                 <p-button type="button" label="Pay" (onClick)="initializePayment(booking)"
                   [loading]="initializingBookingId() === booking.bookingId"
                   [disabled]="initializingBookingId() !== null"
-                  [buttonProps]="{ 'aria-label': 'Pay for booking ' + booking.bookingId }" />
+                  />
               }
               @if (paymentErrors()[booking.bookingId]) {
                 <p class="payment-error" role="alert">{{ paymentErrors()[booking.bookingId] }}</p>

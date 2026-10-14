@@ -2,7 +2,12 @@
   <header class="page-header">
     <span class="brand">Jeme Hotels</span>
     <h1>Rooms</h1>
-    <p>Find a room for your stay.</p>
+    <p>{{ isAdmin() ? 'Manage your rooms.' : 'Find a room for your stay.' }}</p>
+    @if (isAdmin()) {
+      <div class="admin-actions">
+        <p-button type="button" label="Add room" (onClick)="openAddRoom()" [disabled]="isAddingRoom()" />
+      </div>
+    }
   </header>
 
   @if (roomSrv.rooms.isLoading()) {
@@ -24,8 +29,10 @@
               <dd>{{ room.price | number:'1.2-2' }}</dd>
             </div>
           </dl>
-          <p-button type="button" label="Book" [fluid]="true"
+          @if (canBook()) {
+            <p-button type="button" label="Book" [fluid]="true"
             (onClick)="openBooking(room)" [disabled]="isBooking() || isInitializingPayment()"/>
+          }
         </article>
       } @empty {
         <p class="page-message" role="status">No rooms are available right now.</p>
@@ -34,6 +41,7 @@
   }
 </main>
 
+@if (canBook()) {
 <p-dialog [header]="'Book room ' + (selectedRoom()?.roomNumber ?? '')"
   [(visible)]="bookingDialogVisible" [modal]="true" [draggable]="false" [resizable]="false"
   [closable]="!isBooking() && !isInitializingPayment()"
@@ -95,3 +103,51 @@
     </form>
   }
 </p-dialog>
+}
+
+@if (isAdmin()) {
+  <p-dialog header="Add room" [(visible)]="addRoomDialogVisible" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="!isAddingRoom()"
+    [closeOnEscape]="!isAddingRoom()" [blockScroll]="true"
+    [style]="{ width: '28rem', maxWidth: 'calc(100vw - 2rem)' }">
+    @if (addRoomDialogVisible) {
+      <form class="booking-form" [formGroup]="addRoomForm" (ngSubmit)="submitAddRoom()" novalidate
+        [attr.aria-busy]="isAddingRoom()">
+        <fieldset [disabled]="isAddingRoom()">
+          <label for="room-number">Room number</label>
+          <p-inputnumber inputId="room-number" formControlName="roomNumber" [min]="101" [max]="120"
+            [maxFractionDigits]="0" [useGrouping]="false" [fluid]="true" ariaDescribedBy="room-number-help" />
+          <small id="room-number-help" class="field-help">Choose a whole number from 101 to 120.</small>
+          @if (addRoomForm.controls.roomNumber.dirty && addRoomForm.controls.roomNumber.invalid) {
+            <small role="alert">Enter a whole room number between 101 and 120.</small>
+          }
+
+          <label for="room-type">Room type</label>
+          <p-select inputId="room-type" formControlName="roomType" [options]="roomTypes"
+            optionLabel="label" optionValue="value" [fluid]="true" appendTo="body" />
+
+          <label for="room-price">Price</label>
+          <p-inputnumber inputId="room-price" formControlName="price" [min]="0"
+            [maxFractionDigits]="2" [fluid]="true" />
+          @if (addRoomForm.controls.price.dirty && addRoomForm.controls.price.invalid) {
+            <small role="alert">Enter a price of zero or more.</small>
+          }
+
+          <label for="room-image">Room images</label>
+          <input pInputText id="room-image" type="file" accept="image/*" multiple (change)="selectRoomImage($event)" />
+          @if (addRoomForm.controls.Images.dirty && addRoomForm.controls.Images.invalid) {
+            <small role="alert">{{ imageError() || 'Choose at least one room image.' }}</small>
+          }
+        </fieldset>
+        @if (addRoomError()) {
+          <p class="booking-error" role="alert">{{ addRoomError() }}</p>
+        }
+        <div class="booking-actions">
+          <p-button type="button" label="Cancel" severity="secondary" [outlined]="true"
+            [disabled]="isAddingRoom()" (onClick)="addRoomDialogVisible = false" />
+          <p-button type="submit" label="Add room" [disabled]="isAddingRoom()" [loading]="isAddingRoom()" />
+        </div>
+      </form>
+    }
+  </p-dialog>
+}

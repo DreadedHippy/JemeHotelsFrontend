@@ -31,3 +31,7 @@ Record instructions from the user in this file from now onward. Append new instr
 ## 2026-10-14
 
 - Store the user's role returned by the backend alongside the JWT in localStorage, restore it on startup, and clear it on logout or expiry.
+- Admins can add rooms but cannot book rooms. Users can book rooms but cannot add rooms. Implement room creation using `AddRoom` and `RoomService.addRoom`, with a whole room number between 101 and 120 inclusive.
+- Update room creation to match the revised `AddRoom` interface, which no longer includes `roomID`. Remove the room ID form field and omit it from the creation request.
+- Match the latest `AddRoom` update: the image file field is now named `Images` (capital I). Update the form control, payload, and multipart field name accordingly.
+- Match the latest `AddRoom` update: `Images` is now `File[]`. Allow multiple image selection and append each file under the `Images` multipart field.
