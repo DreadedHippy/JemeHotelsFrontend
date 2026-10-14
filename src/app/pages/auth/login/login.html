@@ -24,6 +24,34 @@
     }
 
     <p-button type="submit" label="Log in" [loading]="isLoggingIn()" [disabled]="isLoggingIn()" [fluid]="true" />
+    <button class="forgot-password-link" type="button" (click)="openForgotPassword()">Forgot password?</button>
     <p class="auth-link">New here? <a routerLink="/register">Register</a></p>
   </form>
 </main>
+
+<p-dialog header="Forgot password?" [(visible)]="forgotPasswordVisible" [modal]="true"
+  [draggable]="false" [resizable]="false" [closable]="!isSendingReset()"
+  [closeOnEscape]="!isSendingReset()" [blockScroll]="true"
+  [style]="{ width: '26rem', maxWidth: 'calc(100vw - 2rem)' }">
+  <form class="forgot-password-form" [formGroup]="forgotPasswordForm" (ngSubmit)="submitForgotPassword()"
+    novalidate [attr.aria-busy]="isSendingReset()">
+    <p>Enter your account email to request a password reset link.</p>
+    <label for="reset-email">Email</label>
+    <input pInputText id="reset-email" type="email" autocomplete="email" formControlName="email"
+      [readonly]="isSendingReset()" aria-describedby="reset-email-error"
+      [attr.aria-invalid]="forgotPasswordForm.controls.email.dirty && forgotPasswordForm.controls.email.invalid" />
+    <small id="reset-email-error" role="status">
+      @if (forgotPasswordForm.controls.email.dirty && forgotPasswordForm.controls.email.invalid) {
+        Enter a valid email address.
+      }
+    </small>
+    @if (forgotPasswordError()) {
+      <p class="reset-request-error" role="alert">{{ forgotPasswordError() }}</p>
+    }
+    <div class="reset-actions">
+      <p-button type="button" label="Cancel" severity="secondary" [outlined]="true"
+        [disabled]="isSendingReset()" (onClick)="forgotPasswordVisible = false" />
+      <p-button type="submit" label="Send reset link" [loading]="isSendingReset()" [disabled]="isSendingReset()" />
+    </div>
+  </form>
+</p-dialog>
