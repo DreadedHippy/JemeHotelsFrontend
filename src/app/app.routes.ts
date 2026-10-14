@@ -7,8 +7,18 @@ import { Bookings } from './pages/bookings/bookings';
 import { Callback } from './pages/callback/callback';
 import { Guest } from './pages/guest/guest';
 import { adminGuard } from './guards/admin-guard';
+import { EmailConfirmation } from './pages/auth/email-confirmation/email-confirmation';
+import { Resetpassword } from './pages/auth/resetpassword/resetpassword';
 
 export const routes: Routes = [
+  {
+    path: 'resetpassword',
+    component: Resetpassword
+  },
+  {
+    path: 'confirm-email',
+    component: EmailConfirmation
+  },
   {
     path: 'guest',
     component: Guest,

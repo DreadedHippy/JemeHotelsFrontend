@@ -1,0 +1,19 @@
+<main class="main">
+  <section class="form" aria-labelledby="confirmation-heading" [attr.aria-busy]="isConfirming()">
+    <header class="form-header">
+      <span class="brand">Jeme Hotels</span>
+      <h1 id="confirmation-heading">Email confirmation</h1>
+      <p>Verify your email to access your account.</p>
+    </header>
+
+    @if (isConfirming()) {
+      <p role="status">Confirming your email…</p>
+    } @else if (confirmationError()) {
+      <p role="alert">{{ confirmationError() }}</p>
+    } @else if (confirmed()) {
+      <p class="confirmation-success" role="status">Your email is confirmed. You can now log in.</p>
+    }
+
+    <p class="auth-link"><a routerLink="/login">Go to login</a></p>
+  </section>
+</main>

@@ -1,5 +1,5 @@
 import { DOCUMENT, inject, Injectable, NgZone, signal } from '@angular/core';
-import { LoginData, LoginResponse, RegisterData } from '../interfaces/auth';
+import { LoginData, LoginResponse, RegisterData, ResetPasswordRequest } from '../interfaces/auth';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { Observable, tap } from 'rxjs';
@@ -145,5 +145,19 @@ export class AuthService {
     } catch {
       // In-memory authentication is still cleared if browser storage is blocked.
     }
+  }
+
+  confirmEmail(email: string, token: string) {
+    return this.http.get<{}>(`${environment.baseUrl}/api/Auth/email-confirmation`, {
+      params: { email, token },
+    });
+  }
+
+  resetPassword(data: ResetPasswordRequest) {
+    return this.http.post<{}>(`${environment.baseUrl}/api/Auth/resetpassword`, data)
+  }
+
+  forgotPassword(data: {email: string}) {
+    return this.http.post<{}>(`${environment.baseUrl}/api/Auth/forgotpassword`, data)
   }
 }

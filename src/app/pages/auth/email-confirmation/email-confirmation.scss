@@ -1,0 +1,10 @@
+@use '../login/login';
+
+.confirmation-success {
+  padding: 1rem;
+  margin: 0;
+  background: var(--p-green-100, #dcfce7);
+  color: var(--p-green-800, #166534);
+  border-radius: 0.5rem;
+  line-height: 1.6;
+}

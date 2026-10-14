@@ -41,3 +41,5 @@ Record instructions from the user in this file from now onward. Append new instr
 - Match the updated `AdminBookingResult` interface by displaying its new `roomNumber` and `roomId` fields in the admin bookings list.
 - Match the latest `AdminBookingResult` update by displaying `guestId` and the Paid/Unpaid status from `isPaid` in the admin bookings list.
 - Add search, filtering, and sorting to the bookings page for both admin and user views.
+- Implement `/confirm-email` with `email` and `token` query parameters, calling `AuthService.confirmEmail` and displaying confirmation progress, success, or failure on the email confirmation page.
+- Implement `/resetpassword` using `email` and `token` query parameters, a new-password and confirm-password form based on `ResetPasswordRequest`, and `AuthService.resetPassword`.
