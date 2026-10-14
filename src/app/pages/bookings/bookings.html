@@ -1,17 +1,54 @@
 <main class="bookings-page">
   <header class="page-header">
     <span class="brand">Jeme Hotels</span>
-    <h1>My bookings</h1>
-    <p>View your stays and payment status.</p>
+    <h1>{{ isAdmin() ? 'All bookings' : 'My bookings' }}</h1>
+    <p>{{ isAdmin() ? 'View all guest bookings.' : 'View your stays and payment status.' }}</p>
   </header>
 
-  @if (bookings.isLoading()) {
+  @if (isLoading()) {
     <p class="page-message" role="status">Loading your bookings…</p>
-  } @else if (bookings.error()) {
+  } @else if (loadError()) {
     <div class="page-message">
-      <p role="alert">Unable to load your bookings. Please try again.</p>
-      <p-button type="button" label="Try again" (onClick)="bookings.reload()" />
+      <p role="alert">Unable to load bookings. Please try again.</p>
+      <p-button type="button" label="Try again" (onClick)="reloadBookings()" />
     </div>
+  } @else if (isAdmin()) {
+    <ul class="bookings-list" aria-label="All bookings">
+      @for (booking of adminBookings.value() ?? []; track booking.Id) {
+        <li class="booking-card">
+          <div class="booking-header">
+            <h2>Booking <span>{{ booking.Id }}</span></h2>
+            <span class="payment-status" [class.paid]="booking.isPaid">
+              {{ booking.isPaid ? 'Paid' : 'Unpaid' }}
+            </span>
+          </div>
+          <dl class="booking-details">
+            <div>
+              <dt>Room number</dt>
+              <dd>{{ booking.roomNumber }}</dd>
+            </div>
+            <div>
+              <dt>Room ID</dt>
+              <dd>{{ booking.roomId }}</dd>
+            </div>
+            <div>
+              <dt>Guest ID</dt>
+              <dd>{{ booking.guestId }}</dd>
+            </div>
+            <div>
+              <dt>Duration</dt>
+              <dd>{{ booking.numberOfDays }} {{ booking.numberOfDays === 1 ? 'day' : 'days' }}</dd>
+            </div>
+            <div>
+              <dt>Total bill</dt>
+              <dd>{{ booking.totalBill | number:'1.2-2' }}</dd>
+            </div>
+          </dl>
+        </li>
+      } @empty {
+        <li class="page-message" role="status">There are no bookings yet.</li>
+      }
+    </ul>
   } @else {
     <ul class="bookings-list" aria-label="My bookings">
       @for (booking of bookings.value() ?? []; track booking.bookingId) {

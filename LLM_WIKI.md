@@ -37,3 +37,6 @@ Record instructions from the user in this file from now onward. Append new instr
 - Match the latest `AddRoom` update: `Images` is now `File[]`. Allow multiple image selection and append each file under the `Images` multipart field.
 - Give admins access to a guest list page with an option to elevate a guest to admin. Use the guest service methods (`retrieveGuests` and `elevateGuestToAdmin` in `guest.ts`; the referenced `guest.spec.ts` contains only a creation test).
 - Match the updated `GuestResult` interface: use `userName` and `email` instead of `UserName` and `Email` throughout guest display and elevation logic.
+- When an admin views the bookings page, retrieve all bookings using `BookingService.getAllBookings` and display the `AdminBookingResult` fields. Users continue to see their own bookings.
+- Match the updated `AdminBookingResult` interface by displaying its new `roomNumber` and `roomId` fields in the admin bookings list.
+- Match the latest `AdminBookingResult` update by displaying `guestId` and the Paid/Unpaid status from `isPaid` in the admin bookings list.

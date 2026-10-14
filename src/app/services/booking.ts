@@ -1,5 +1,5 @@
 import { inject, Service } from '@angular/core';
-import { Booking, BookingResponse } from '../interfaces/booking';
+import { AdminBookingResult, Booking, BookingResponse } from '../interfaces/booking';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 
@@ -9,5 +9,9 @@ export class BookingService {
 
   bookRoom(data: Booking) {
     return this.http.post<BookingResponse>(`${environment.baseUrl}/api/Bookings`, data)
+  }
+
+  getAllBookings() {
+    return this.http.get<AdminBookingResult[]>(`${environment.baseUrl}/api/Bookings`)
   }
 }
