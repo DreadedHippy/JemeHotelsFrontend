@@ -1,0 +1,62 @@
+<main class="guests-page">
+  <header class="page-header">
+    <span class="brand">Jeme Hotels</span>
+    <h1>Guests</h1>
+    <p>View guests and manage admin access.</p>
+    <a routerLink="/rooms">View rooms</a>
+  </header>
+
+  @if (isLoading()) {
+    <p role="status">Loading guests…</p>
+  } @else if (loadError()) {
+    <p role="alert">{{ loadError() }}</p>
+    <p-button type="button" label="Try again" (onClick)="loadGuests()" />
+  } @else {
+    <ul class="guest-list" aria-label="Guests">
+      @for (guest of guests(); track guest.userName) {
+        <li class="guest-card">
+          <div class="guest-info">
+            <h2>{{ guest.userName }}</h2>
+            <p>{{ guest.email }}</p>
+          </div>
+          @if (elevatedGuests()[guest.userName]) {
+            <span class="admin-status" role="status">Admin access granted</span>
+          } @else {
+            <p-button type="button" label="Elevate to admin" [disabled]="isElevating()"
+              (onClick)="confirmElevation(guest)"
+              />
+          }
+        </li>
+      } @empty {
+        <li role="status">No guests on this page.</li>
+      }
+    </ul>
+  }
+
+  <nav class="pagination" aria-label="Guest pages">
+    <p-button type="button" label="Previous" severity="secondary" [outlined]="true"
+      [disabled]="pageNumber() === 1 || isLoading() || isElevating()"
+      (onClick)="loadGuests(pageNumber() - 1)" />
+    <span>Page {{ pageNumber() }}</span>
+    <p-button type="button" label="Next" severity="secondary" [outlined]="true"
+      [disabled]="guests().length < pageSize || isLoading() || isElevating() || !!loadError()"
+      (onClick)="loadGuests(pageNumber() + 1)" />
+  </nav>
+</main>
+
+<p-dialog header="Elevate guest to admin" [(visible)]="confirmationVisible" [modal]="true"
+  [draggable]="false" [resizable]="false" [closable]="!isElevating()"
+  [closeOnEscape]="!isElevating()" [blockScroll]="true"
+  [style]="{ width: '28rem', maxWidth: 'calc(100vw - 2rem)' }">
+  <p class="confirmation-copy">Grant admin access to <strong>{{ selectedGuest()?.userName }}</strong>?
+    They will be able to add rooms and elevate other guests to admin.</p>
+  @if (elevationError()) {
+    <p class="elevation-error" role="alert">{{ elevationError() }}</p>
+  }
+  <div class="dialog-actions">
+    <p-button type="button" label="Cancel" severity="secondary" [outlined]="true" [autofocus]="true"
+      [disabled]="isElevating()" (onClick)="confirmationVisible = false" />
+    <p-button type="button" label="Elevate to admin" [loading]="isElevating()"
+      [disabled]="isElevating()" (onClick)="elevateGuest()" />
+  </div>
+</p-dialog>

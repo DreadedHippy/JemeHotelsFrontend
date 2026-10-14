@@ -14,13 +14,14 @@ import { AuthService } from '../../services/auth';
 import { InputTextModule } from '@openng/optimus-ui/inputtext';
 import { InputNumberModule } from '@openng/optimus-ui/inputnumber';
 import { SelectModule } from '@openng/optimus-ui/select';
+import { RouterLink } from '@angular/router';
 import { Booking, BookingResponse } from '../../interfaces/booking';
 import { Payment } from '../../services/payment';
 import { PaymentInitializeResponse } from '../../interfaces/payment';
 
 @Component({
   imports: [DecimalPipe, TitleCasePipe, ButtonModule, DialogModule, DatePickerModule, ReactiveFormsModule,
-    InputTextModule, InputNumberModule, SelectModule],
+    InputTextModule, InputNumberModule, SelectModule, RouterLink],
   selector: 'app-rooms',
   styleUrl: './rooms.scss',
   templateUrl: './rooms.html',

@@ -12,6 +12,8 @@ export interface PaymentVerifyResponse {
   reference: string;
 }
 
+
+
 // public class PaystackInitializeData
 //  {
 //      [JsonPropertyName("authorization_url")] public string AuthorizationUrl { get; set; } = default!;

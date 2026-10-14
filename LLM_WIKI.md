@@ -35,3 +35,5 @@ Record instructions from the user in this file from now onward. Append new instr
 - Update room creation to match the revised `AddRoom` interface, which no longer includes `roomID`. Remove the room ID form field and omit it from the creation request.
 - Match the latest `AddRoom` update: the image file field is now named `Images` (capital I). Update the form control, payload, and multipart field name accordingly.
 - Match the latest `AddRoom` update: `Images` is now `File[]`. Allow multiple image selection and append each file under the `Images` multipart field.
+- Give admins access to a guest list page with an option to elevate a guest to admin. Use the guest service methods (`retrieveGuests` and `elevateGuestToAdmin` in `guest.ts`; the referenced `guest.spec.ts` contains only a creation test).
+- Match the updated `GuestResult` interface: use `userName` and `email` instead of `UserName` and `Email` throughout guest display and elevation logic.

@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  min-height: 100svh;
+  color: var(--p-text-color, #1e293b);
+  background: var(--p-surface-100, #f1f5f9);
+}
+
+.guests-page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 5vw, 3rem);
+}
+
+.page-header {
+  margin-bottom: 2rem;
+
+  .brand, a {
+    color: var(--p-primary-color, #047857);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  h1 {
+    margin: 0.75rem 0 0.5rem;
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    color: var(--p-text-muted-color, #64748b);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+  }
+}
+
+.guest-list {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.guest-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--p-content-border-color, #e2e8f0);
+  border-radius: 1rem;
+  background: var(--p-content-background, #fff);
+}
+
+.guest-info {
+  flex: 1 1 12rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+
+  h2 { margin: 0; font-size: 1rem; }
+  p { margin: 0.5rem 0 0; color: var(--p-text-muted-color, #64748b); }
+}
+
+.admin-status { color: var(--p-primary-color, #047857); font-size: 0.875rem; }
+
+.pagination, .dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.confirmation-copy { line-height: 1.6; overflow-wrap: anywhere; }
+.elevation-error { color: var(--p-red-600, #dc2626); line-height: 1.5; }

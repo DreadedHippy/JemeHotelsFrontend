@@ -5,6 +5,7 @@
     <p>{{ isAdmin() ? 'Manage your rooms.' : 'Find a room for your stay.' }}</p>
     @if (isAdmin()) {
       <div class="admin-actions">
+        <a pButton routerLink="/guest"><span pButtonLabel>Manage guests</span></a>
         <p-button type="button" label="Add room" (onClick)="openAddRoom()" [disabled]="isAddingRoom()" />
       </div>
     }

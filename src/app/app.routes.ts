@@ -5,8 +5,15 @@ import { Rooms } from './pages/rooms/rooms';
 import { authGuard } from './guards/auth-guard';
 import { Bookings } from './pages/bookings/bookings';
 import { Callback } from './pages/callback/callback';
+import { Guest } from './pages/guest/guest';
+import { adminGuard } from './guards/admin-guard';
 
 export const routes: Routes = [
+  {
+    path: 'guest',
+    component: Guest,
+    canActivate: [adminGuard]
+  },
   {
     path: 'callback',
     component: Callback
