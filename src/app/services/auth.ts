@@ -12,21 +12,24 @@ export class AuthService {
   private zone = inject(NgZone);
   private window = inject(DOCUMENT).defaultView;
   private token = signal<string | null>(null);
+  private storedRole = signal<LoginResponse['role'] | null>(null);
+  readonly role = this.storedRole.asReadonly();
   private expiresAt = 0;
   private logoutTimer?: ReturnType<typeof setTimeout>;
   private readonly tokenKey = 'jwtToken';
   private readonly expiryKey = 'jwtTokenExpiresAt';
+  private readonly roleKey = 'role';
 
   login(data: LoginData): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${environment.baseUrl}/api/Auth/Login`, data)
-      .pipe(tap((response) => this.saveToken(response.jwtToken)));
+      .pipe(tap((response) => this.saveToken(response.jwtToken, response.role)));
   }
 
   register(data: RegisterData): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${environment.baseUrl}/api/Auth/Register`, data)
   }
 
-  saveToken(jwtToken: string): void {
+  saveToken(jwtToken: string, role: LoginResponse['role']): void {
     const expiresAt = this.getTokenExpiry(jwtToken);
     if (expiresAt === null || expiresAt <= Date.now()) {
       this.clearSession();
@@ -39,11 +42,13 @@ export class AuthService {
     try {
       storage.setItem(this.tokenKey, jwtToken);
       storage.setItem(this.expiryKey, String(expiresAt));
+      storage.setItem(this.roleKey, role);
     } catch (error) {
       this.clearSession();
       throw error;
     }
     this.token.set(jwtToken);
+    this.storedRole.set(role);
     this.expiresAt = expiresAt;
     this.scheduleLogout();
   }
@@ -51,12 +56,14 @@ export class AuthService {
   autoAuthenticate(): void {
     this.clearTimer();
     this.token.set(null);
+    this.storedRole.set(null);
     this.expiresAt = 0;
 
     try {
       const storage = this.window?.localStorage;
       const jwtToken = storage?.getItem(this.tokenKey);
       const savedExpiry = Number(storage?.getItem(this.expiryKey));
+      const savedRole = storage?.getItem(this.roleKey);
       const tokenExpiry = jwtToken ? this.getTokenExpiry(jwtToken) : null;
 
       if (!jwtToken || tokenExpiry === null || tokenExpiry <= Date.now() || savedExpiry !== tokenExpiry) {
@@ -65,6 +72,7 @@ export class AuthService {
       }
 
       this.token.set(jwtToken);
+      this.storedRole.set(savedRole === 'User' || savedRole === 'Admin' ? savedRole : null);
       this.expiresAt = tokenExpiry;
       this.scheduleLogout();
     } catch {
@@ -128,10 +136,12 @@ export class AuthService {
   private clearSession(): void {
     this.clearTimer();
     this.token.set(null);
+    this.storedRole.set(null);
     this.expiresAt = 0;
     try {
       this.window?.localStorage.removeItem(this.tokenKey);
       this.window?.localStorage.removeItem(this.expiryKey);
+      this.window?.localStorage.removeItem(this.roleKey);
     } catch {
       // In-memory authentication is still cleared if browser storage is blocked.
     }

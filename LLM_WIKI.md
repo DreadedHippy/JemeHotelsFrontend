@@ -27,3 +27,7 @@ Record instructions from the user in this file from now onward. Append new instr
 - Add a payment button for unpaid bookings in the bookings list, using the booking ID to initialize payment and providing a link to checkout.
 - Position the Pay button on the same line as the booking information, at the rightmost side of each booking.
 - If the login error is exactly `Email is not confirmed`, show a toast prompting the user to click the verification link in their email.
+
+## 2026-10-14
+
+- Store the user's role returned by the backend alongside the JWT in localStorage, restore it on startup, and clear it on logout or expiry.

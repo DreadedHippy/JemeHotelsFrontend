@@ -6,11 +6,12 @@ export interface LoginData {
 export interface RegisterData {
   username: string,
   email: string,
-  password: string
-  confirmPassword: string
+  password: string;
+  confirmPassword: string;
 }
 
 
 export interface LoginResponse {
-  jwtToken: string
+  jwtToken: string;
+  role: 'User' | 'Admin';
 }
