@@ -1,3 +1,48 @@
+.booking-controls {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--p-content-background, #fff);
+  border: 1px solid var(--p-content-border-color, #e2e8f0);
+  border-radius: 1rem;
+}
+
+.control-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1 1 10rem;
+  min-width: 0;
+
+  label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+}
+
+.search-field {
+  flex-basis: 16rem;
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  input {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+.result-count {
+  margin: 1rem 0;
+  color: var(--p-text-muted-color, #64748b);
+  font-size: 0.875rem;
+}
+
 .booking-payment {
   grid-column: 2;
   grid-row: 2;

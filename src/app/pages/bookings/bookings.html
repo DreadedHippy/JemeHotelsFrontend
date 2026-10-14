@@ -5,6 +5,41 @@
     <p>{{ isAdmin() ? 'View all guest bookings.' : 'View your stays and payment status.' }}</p>
   </header>
 
+  <section class="booking-controls" aria-label="Search, filter and sort bookings">
+    <div class="control-field search-field">
+      <label for="booking-search">Search bookings</label>
+      <div class="search-input">
+        <input #searchInput pInputText id="booking-search" type="search"
+          [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)"
+          [placeholder]="isAdmin() ? 'Booking, room or guest ID' : 'Booking ID or start date'" />
+        @if (searchQuery()) {
+          <p-button type="button" label="Clear" severity="secondary" [text]="true"
+            (onClick)="searchQuery.set(''); searchInput.focus()" />
+        }
+      </div>
+    </div>
+    <div class="control-field">
+      <label for="payment-filter">Payment status</label>
+      <p-select inputId="payment-filter" [options]="paymentOptions" optionLabel="label" optionValue="value"
+        [ngModel]="paymentFilter()" (ngModelChange)="paymentFilter.set($event)" [fluid]="true" />
+    </div>
+    <div class="control-field">
+      <label for="booking-sort">Sort by</label>
+      <p-select inputId="booking-sort" [options]="sortOptions()" optionLabel="label" optionValue="value"
+        [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event)" [fluid]="true" />
+    </div>
+    <div class="control-field">
+      <label for="sort-direction">Order</label>
+      <p-select inputId="sort-direction" [options]="directionOptions" optionLabel="label" optionValue="value"
+        [ngModel]="sortDirection()" (ngModelChange)="sortDirection.set($event)"
+        [disabled]="sortBy() === 'original'" [fluid]="true" />
+    </div>
+    <p-button type="button" label="Reset" severity="secondary" [outlined]="true" (onClick)="resetControls()" />
+  </section>
+  @if (!isLoading() && !loadError()) {
+    <p class="result-count" role="status">{{ resultCount() }} {{ resultCount() === 1 ? 'booking' : 'bookings' }}</p>
+  }
+
   @if (isLoading()) {
     <p class="page-message" role="status">Loading your bookings…</p>
   } @else if (loadError()) {
@@ -14,7 +49,7 @@
     </div>
   } @else if (isAdmin()) {
     <ul class="bookings-list" aria-label="All bookings">
-      @for (booking of adminBookings.value() ?? []; track booking.Id) {
+      @for (booking of filteredAdminBookings(); track booking.Id) {
         <li class="booking-card">
           <div class="booking-header">
             <h2>Booking <span>{{ booking.Id }}</span></h2>
@@ -46,12 +81,12 @@
           </dl>
         </li>
       } @empty {
-        <li class="page-message" role="status">There are no bookings yet.</li>
+        <li class="page-message" role="status">{{ hasFilters() ? 'No bookings match your search or filter. Clear them to see all bookings.' : 'There are no bookings yet.' }}</li>
       }
     </ul>
   } @else {
     <ul class="bookings-list" aria-label="My bookings">
-      @for (booking of bookings.value() ?? []; track booking.bookingId) {
+      @for (booking of filteredBookings(); track booking.bookingId) {
         <li class="booking-card">
           <div class="booking-header">
             <h2>Booking <span>{{ booking.bookingId }}</span></h2>
@@ -93,7 +128,7 @@
           }
         </li>
       } @empty {
-        <li class="page-message" role="status">You have no bookings yet.</li>
+        <li class="page-message" role="status">{{ hasFilters() ? 'No bookings match your search or filter. Clear them to see all bookings.' : 'You have no bookings yet.' }}</li>
       }
     </ul>
   }

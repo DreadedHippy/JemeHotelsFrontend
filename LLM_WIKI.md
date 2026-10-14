@@ -40,3 +40,4 @@ Record instructions from the user in this file from now onward. Append new instr
 - When an admin views the bookings page, retrieve all bookings using `BookingService.getAllBookings` and display the `AdminBookingResult` fields. Users continue to see their own bookings.
 - Match the updated `AdminBookingResult` interface by displaying its new `roomNumber` and `roomId` fields in the admin bookings list.
 - Match the latest `AdminBookingResult` update by displaying `guestId` and the Paid/Unpaid status from `isPaid` in the admin bookings list.
+- Add search, filtering, and sorting to the bookings page for both admin and user views.
