@@ -48,6 +48,11 @@ export class Rooms {
   });
 
   rooms = computed(() => this.roomSrv.rooms.hasValue() ? this.roomSrv.rooms.value():[]);
+  failedImages = signal<Set<string>>(new Set());
+
+  onImageError(url: string): void {
+    this.failedImages.update((images) => new Set([...images, url]));
+  }
 
   private bookingSrv = inject(BookingService);
   private paymentSrv = inject(Payment);

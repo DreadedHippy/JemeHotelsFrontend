@@ -44,3 +44,4 @@ Record instructions from the user in this file from now onward. Append new instr
 - Implement `/confirm-email` with `email` and `token` query parameters, calling `AuthService.confirmEmail` and displaying confirmation progress, success, or failure on the email confirmation page.
 - Implement `/resetpassword` using `email` and `token` query parameters, a new-password and confirm-password form based on `ResetPasswordRequest`, and `AuthService.resetPassword`.
 - Add a "Forgot password?" prompt that opens an email modal, calls `AuthService.forgotPassword`, and shows a success toast and dismisses the modal on a successful 200 response.
+- Display the image URL from `Room.image` on each room card.

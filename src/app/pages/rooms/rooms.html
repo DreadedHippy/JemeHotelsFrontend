@@ -22,6 +22,14 @@
     <section class="rooms-grid" aria-label="Rooms">
       @for (room of rooms(); track room.roomID) {
         <article class="room-card">
+          <div class="room-image">
+            @if (room.image && !failedImages().has(room.image)) {
+              <img [src]="room.image" [alt]="'Room ' + room.roomNumber + ' — ' + room.roomType"
+                width="600" height="400" loading="lazy" decoding="async" (error)="onImageError(room.image)" />
+            } @else {
+              <span>Room image unavailable</span>
+            }
+          </div>
           <span class="room-type">{{ room.roomType | titlecase }}</span>
           <h2>Room {{ room.roomNumber }}</h2>
           <dl class="room-details">
