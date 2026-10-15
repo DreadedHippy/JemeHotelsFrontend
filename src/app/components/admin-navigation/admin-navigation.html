@@ -1,0 +1,38 @@
+<aside class="desktop-sidebar" aria-label="Admin sidebar">
+  <ng-container [ngTemplateOutlet]="navigation" />
+</aside>
+<div class="mobile-admin-bar">
+  <a routerLink="/">JemeHotels <span>Admin</span></a>
+  <button type="button" (click)="menuVisible = true" [attr.aria-expanded]="menuVisible" aria-haspopup="dialog">
+    <span aria-hidden="true">☰</span> Menu
+  </button>
+</div>
+<p-drawer header="Admin navigation" [(visible)]="menuVisible" [modal]="true" [blockScroll]="true"
+  [closeOnEscape]="true" ariaCloseLabel="Close admin navigation" [style]="{ width: '19rem', maxWidth: '90vw' }">
+  <ng-container [ngTemplateOutlet]="navigation" />
+</p-drawer>
+
+<ng-template #navigation>
+  <div class="sidebar-content">
+    <a class="sidebar-brand" routerLink="/" (click)="menuVisible = false" aria-label="JemeHotels home">
+      <img src="images/jeme-logo.png" width="160" height="60" alt="Jeme Technologies" />
+      <span>JemeHotels<span class="brand-dot">.</span></span>
+    </a>
+    <div class="workspace-label"><span class="admin-dot" aria-hidden="true"></span> ADMIN WORKSPACE</div>
+    <nav aria-label="Admin navigation">
+      @for (link of links; track link.path) {
+        <a [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+          ariaCurrentWhenActive="page" (click)="menuVisible = false">
+          <span class="nav-icon" aria-hidden="true">{{ link.icon }}</span>
+          <span><strong>{{ link.label }}</strong><small>{{ link.description }}</small></span>
+          <span class="nav-arrow" aria-hidden="true">↗</span>
+        </a>
+      }
+    </nav>
+    <div class="sidebar-footer">
+      <p>Everything you need.<br />One place to manage it.</p>
+      <a class="technology-link" href="https://jemetechnologies.ng/" target="_blank" rel="noopener noreferrer">Jeme Technologies ↗<span class="visually-hidden"> (opens in a new tab)</span></a>
+      <button class="logout-button" type="button" (click)="logout()"><span aria-hidden="true">↪</span> Log out</button>
+    </div>
+  </div>
+</ng-template>

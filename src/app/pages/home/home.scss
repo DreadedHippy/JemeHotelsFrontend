@@ -1,0 +1,49 @@
+:host { display: block; color: var(--jh-ink); background: var(--jh-paper); }
+.landing { max-width: 100rem; margin-inline: auto; }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.25rem clamp(1.25rem, 5vw, 5rem); border-bottom: 1px solid var(--jh-border); }
+.hotel-brand { display: flex; align-items: center; gap: 0.9rem; color: var(--jh-green); font-size: 1.2rem; font-weight: 800; text-decoration: none; white-space: nowrap; }
+.logo-plaque { display: grid; place-items: center; padding: 0.25rem 0.5rem; border-radius: 0.45rem; background: var(--jh-green); img { width: 6.6rem; height: 2.5rem; object-fit: contain; } }
+.brand-light { font-weight: 400; }
+.site-header nav { display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2.25rem); font-size: 0.8125rem; a:not(.jeme-button) { color: var(--jh-ink); text-decoration: none; &:hover { color: var(--jh-green); text-decoration: underline; text-underline-offset: 0.4rem; } } }
+.hero { display: grid; grid-template-columns: 1.02fr 1fr; gap: 2.5rem; align-items: center; padding: 4.75rem clamp(1.25rem, 5vw, 5rem) 3.5rem; }
+.eyebrow { display: flex; align-items: center; gap: 0.65rem; margin: 0 0 1.5rem; color: var(--jh-green); font-size: 0.67rem; font-weight: 800; letter-spacing: 0.16em; line-height: 1.8; text-transform: uppercase; }
+.welcome-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--jh-green); box-shadow: 0 0 0 5px var(--jh-mist); }
+h1, h2, h3 { text-wrap: balance; }
+h1 { margin: 0; font-family: var(--jh-display-font); font-size: clamp(3rem, 5.6vw, 5.75rem); line-height: 1.05; font-weight: 600; letter-spacing: -0.07em; span { color: var(--jh-green); } }
+.hero-description { max-width: 25rem; margin: 1.75rem 0; color: var(--jh-muted); font-size: 0.95rem; line-height: 1.95; }
+.hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1.75rem; }
+.quiet-link { display: inline-flex; align-items: center; gap: 1rem; padding-block: 0.5rem; color: var(--jh-green); font-size: 0.8125rem; font-weight: 700; text-decoration: none; span { font-size: 1.2rem; } &:hover { text-decoration: underline; text-underline-offset: 0.35rem; } }
+.hero-note { max-width: 27rem; margin: 2rem 0 0; font-size: 0.7rem; line-height: 1.8; color: var(--jh-muted); }
+.hero-visual { position: relative; margin: 0 0 1.25rem; min-width: 0; }
+.hero-photo { display: block; width: 100%; height: clamp(26rem, 40vw, 35rem); object-fit: cover; object-position: 60% center; border-radius: 0.75rem 6rem 0.75rem 0.75rem; }
+.photo-caption { display: flex; align-items: center; gap: 0.65rem; position: absolute; top: 1.5rem; left: 1.5rem; color: #fff; font-size: 0.7rem; text-shadow: 0 1px 4px #000; }
+.caption-line { width: 1.5rem; height: 1px; background: currentColor; }
+.room-key { position: absolute; bottom: -1.5rem; left: -1.5rem; display: flex; flex-direction: column; width: 10.75rem; min-height: 14rem; padding: 1.3rem; transform: rotate(-7deg); color: #fff; background: var(--jh-green); border: 1px solid #ffffff35; border-radius: 0.85rem; box-shadow: 0 15px 30px #142d2726; }
+.key-brand { font-size: 0.53rem; font-weight: 700; letter-spacing: 0.16em; }
+.key-symbol { font-family: var(--jh-display-font); font-size: 4rem; line-height: 1.5; letter-spacing: -0.12em; span { color: var(--jh-lime); } }
+.key-footer { font-size: 0.6rem; line-height: 1.8; }
+.key-contact { position: absolute; right: 1rem; bottom: 1.25rem; font-size: 0.7rem; letter-spacing: -0.15em; }
+.stay-strip { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin: 1.25rem clamp(1.25rem, 5vw, 5rem) 0; padding: 1.75rem 0; border-block: 1px solid var(--jh-border); color: var(--jh-muted); font-size: 0.75rem; > span { display: inline-flex; align-items: center; gap: 0.75rem; } }
+.strip-icon { color: var(--jh-green); font-size: 1.4rem; }
+.stays-section, .journey-section { padding: 5.5rem clamp(1.25rem, 5vw, 5rem); scroll-margin-top: 2rem; }
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 2rem; .eyebrow { margin-bottom: 0.75rem; } }
+h2 { max-width: 30rem; margin: 0; font-family: var(--jh-display-font); font-size: clamp(2rem, 3.5vw, 3.1rem); font-weight: 500; line-height: 1.2; letter-spacing: -0.055em; }
+.stay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.stay-card { min-width: 0; }
+.stay-photo { position: relative; overflow: hidden; aspect-ratio: 1.6; border-radius: 0.75rem; background: var(--jh-mist); img { display: block; height: 100%; width: 100%; object-fit: cover; } }
+.room-label { position: absolute; left: 1rem; bottom: 1rem; padding: 0.45rem 0.8rem; background: var(--jh-paper); color: var(--jh-green); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; border-radius: 0.3rem; }
+.stay-content { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-top: 1.4rem; h3 { margin: 0; font-size: 1.05rem; font-weight: 700; } p { color: var(--jh-muted); font-size: 0.75rem; line-height: 1.8; margin: 0.5rem 0 0; } }
+.round-link { flex-shrink: 0; display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border-radius: 50%; border: 1px solid var(--jh-border); color: var(--jh-green); font-size: 1.4rem; text-decoration: none; &:hover { color: #fff; background: var(--jh-green); border-color: var(--jh-green); } }
+.photo-note { margin: 1.5rem 0 0; color: var(--jh-muted); font-size: 0.65rem; line-height: 1.7; }
+.journey-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; background: var(--jh-mist); .eyebrow { margin-bottom: 1rem; } }
+.journey-intro > p:not(.eyebrow) { max-width: 22rem; color: var(--jh-muted); font-size: 0.875rem; line-height: 1.9; }
+.journey-steps { display: flex; flex-direction: column; justify-content: center; padding: 0; margin: 0; list-style: none; li { display: flex; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid var(--jh-border); &:first-child { padding-top: 0; } &:last-child { border: 0; padding-bottom: 0; } } h3 { margin: 0; font-size: 1rem; } p { color: var(--jh-muted); font-size: 0.8rem; line-height: 1.85; margin: 0.5rem 0 0; } }
+.step-number { color: var(--jh-green); font-size: 0.75rem; font-weight: 700; padding-top: 0.15rem; }
+.closing-section { display: flex; justify-content: space-between; align-items: center; gap: 2rem; padding: 4rem; margin: 5rem clamp(1.25rem, 5vw, 5rem); color: #fff; background: var(--jh-green); border-radius: 1rem; .eyebrow { color: var(--jh-lime); margin-bottom: 1rem; } }
+.site-footer { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; align-items: center; padding: 0 clamp(1.25rem, 5vw, 5rem) 2.5rem; p { color: var(--jh-muted); font-size: 0.7rem; } nav { display: flex; flex-wrap: wrap; gap: 1.5rem; a { color: var(--jh-green); font-size: 0.75rem; text-underline-offset: 0.3rem; } } }
+.footer-brand { color: var(--jh-green); font-weight: 800; font-size: 1.25rem; text-decoration: none; span { color: var(--jh-lime); } }
+a:focus-visible { outline: 2px solid var(--jh-green); outline-offset: 5px; }
+.closing-section a:focus-visible { outline-color: #fff; }
+@media (max-width: 70rem) { .section-link { display: none; } .hero { gap: 1.75rem; } .closing-section { padding: 2.5rem; } }
+@media (max-width: 48rem) { .site-header { gap: 1rem; flex-wrap: wrap; } .hotel-brand { font-size: 1rem; } .site-header nav { gap: 1rem; } .logo-plaque { display: none; } .hero { grid-template-columns: 1fr; padding-top: 3.5rem; gap: 3rem; } .hero-copy { max-width: 35rem; } h1 { font-size: clamp(3rem, 11vw, 4.75rem); } .hero-description { max-width: 32rem; } .hero-photo { height: 28rem; } .hero-visual { margin-left: 1rem; } .stay-strip { gap: 1rem; } .stays-section, .journey-section { padding-block: 3.5rem; } .section-heading { align-items: flex-start; flex-direction: column; gap: 1rem; } .journey-section { grid-template-columns: 1fr; gap: 2rem; } .closing-section { margin-block: 3rem; flex-direction: column; align-items: flex-start; } .copyright { width: 100%; } }
+@media (max-width: 32rem) { .stay-grid { grid-template-columns: 1fr; gap: 2rem; } .hero-photo { height: 24rem; } .room-key { width: 9rem; min-height: 12rem; padding: 1rem; } .key-symbol { font-size: 3.25rem; } .hero-actions { gap: 1rem; } .site-header nav .compact { padding: 0.7rem 0.85rem; } .closing-section { padding: 2rem 1.5rem; } }

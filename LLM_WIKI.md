@@ -45,3 +45,10 @@ Record instructions from the user in this file from now onward. Append new instr
 - Implement `/resetpassword` using `email` and `token` query parameters, a new-password and confirm-password form based on `ResetPasswordRequest`, and `AuthService.resetPassword`.
 - Add a "Forgot password?" prompt that opens an email modal, calls `AuthService.forgotPassword`, and shows a success toast and dismisses the modal on a successful 200 response.
 - Display the image URL from `Room.image` on each room card.
+
+## 2026-10-15
+
+- Create a beautiful JemeHotels landing page at the base route, matching the existing app theme, using the frontend design premium skill and the attached Jeme logo reference.
+- Include a link to `https://jemetechnologies.ng/` on the landing page.
+- Add an admin-only side menu for quick navigation to bookings, rooms, guests, and the application's other relevant pages.
+- Fix the admin sidebar cutting off and leaving a white column when scrolling long pages; its host must stretch to the full page height so the viewport-height sidebar remains sticky within it.

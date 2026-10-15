@@ -1,2 +1,10 @@
 <p-toast />
-<router-outlet />
+<a class="skip-link" href="#application-content">Skip to content</a>
+<div class="app-shell" [class.with-admin-navigation]="isAdmin()">
+  @if (isAdmin()) {
+    <app-admin-navigation />
+  }
+  <div id="application-content" class="application-content" tabindex="-1">
+    <router-outlet />
+  </div>
+</div>

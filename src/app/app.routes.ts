@@ -9,8 +9,14 @@ import { Guest } from './pages/guest/guest';
 import { adminGuard } from './guards/admin-guard';
 import { EmailConfirmation } from './pages/auth/email-confirmation/email-confirmation';
 import { Resetpassword } from './pages/auth/resetpassword/resetpassword';
+import { Home } from './pages/home/home';
 
 export const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    component: Home
+  },
   {
     path: 'resetpassword',
     component: Resetpassword

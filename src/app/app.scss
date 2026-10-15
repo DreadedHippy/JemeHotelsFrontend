@@ -1,0 +1,6 @@
+:host { display: block; }
+.app-shell { min-height: 100svh; }
+.with-admin-navigation { display: grid; grid-template-columns: 16.5rem minmax(0, 1fr); align-items: start; }
+.application-content { min-width: 0; }
+.skip-link { position: fixed; z-index: 2000; top: 0.75rem; left: 1rem; padding: 0.8rem 1rem; transform: translateY(-180%); color: #fff; background: var(--jh-green); border: 2px solid var(--jh-lime); border-radius: 0.5rem; font-size: 0.875rem; &:focus { transform: translateY(0); } }
+@media (max-width: 64rem) { .with-admin-navigation { display: block; } }

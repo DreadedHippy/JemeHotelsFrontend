@@ -1,0 +1,88 @@
+<div class="landing">
+  <header class="site-header">
+    <a class="hotel-brand" routerLink="/" aria-label="JemeHotels home">
+      <span class="logo-plaque"><img src="images/jeme-logo.png" alt="Jeme Technologies" width="128" height="48" /></span>
+      <span>Jeme<span class="brand-light">Hotels</span></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a class="section-link" href="#stays">The rooms</a>
+      <a class="section-link" href="#how-it-works">Your stay, simplified</a>
+      @if (isLoggedIn()) {
+        <a class="jeme-button compact" routerLink="/bookings">{{ isAdmin() ? 'All bookings' : 'My bookings' }} <span aria-hidden="true">↗</span></a>
+      } @else {
+        <a class="login-link" routerLink="/login">Log in</a>
+        <a class="jeme-button compact" routerLink="/register">Get started <span aria-hidden="true">↗</span></a>
+      }
+    </nav>
+  </header>
+
+  <main id="home-main">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="welcome-dot" aria-hidden="true"></span> Welcome to JemeHotels</p>
+        <h1 id="hero-heading">A little escape.<br />A better <span>stay.</span></h1>
+        <p class="hero-description">Make room for a slower morning, a new adventure, or simply a change of scene. Your next stay starts here.</p>
+        <div class="hero-actions">
+          <a class="jeme-button" routerLink="/rooms">{{ isAdmin() ? 'Manage rooms' : 'Explore rooms' }} <span aria-hidden="true">↗</span></a>
+          <a class="quiet-link" href="#how-it-works">How it works <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="hero-note">{{ isLoggedIn() ? 'Your rooms, bookings and payments. All in one place.' : 'Find your room. Choose your dates. Make it yours.' }}</p>
+      </div>
+      <figure class="hero-visual">
+        <img class="hero-photo" src="images/hotel-room.jpg" width="1600" height="1067"
+          alt="An inviting bedroom with warm wood finishes and a view of tropical greenery" fetchpriority="high" />
+        <div class="photo-caption"><span class="caption-line" aria-hidden="true"></span> Space to settle in.</div>
+        <div class="room-key" aria-hidden="true">
+          <span class="key-brand">JEME HOTELS</span>
+          <span class="key-symbol">J<span>H</span></span>
+          <span class="key-footer">Your next chapter<br />starts with a check-in.</span>
+          <span class="key-contact" aria-hidden="true">)))</span>
+        </div>
+      </figure>
+    </section>
+
+    <div class="stay-strip" aria-label="Booking features">
+      <span><span class="strip-icon" aria-hidden="true">◇</span> A room for your plans</span>
+      <span><span class="strip-icon" aria-hidden="true">▦</span> Dates that work for you</span>
+      <span><span class="strip-icon" aria-hidden="true">✓</span> Online booking &amp; payment</span>
+    </div>
+
+    <section class="stays-section" id="stays" aria-labelledby="stays-heading">
+      <div class="section-heading">
+        <div><p class="eyebrow">FIND YOUR KIND OF COMFORT</p><h2 id="stays-heading">Room to make yourself at home.</h2></div>
+        <a class="quiet-link" routerLink="/rooms">View rooms <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="stay-grid">
+        <article class="stay-card">
+          <div class="stay-photo"><img src="images/hotel-room.jpg" alt="A warm, restful bedroom interior" width="800" height="534" loading="lazy" decoding="async" /><span class="room-label">BASIC</span></div>
+          <div class="stay-content"><div><h3>Keep it simple.</h3><p>A straightforward choice for your next stay.</p></div><a class="round-link" routerLink="/rooms" aria-label="Explore basic rooms">↗</a></div>
+        </article>
+        <article class="stay-card">
+          <div class="stay-photo"><img src="images/ensuite-room.jpg" alt="A light bedroom with a generously sized bed and soft furnishings" width="1000" height="667" loading="lazy" decoding="async" /><span class="room-label">ENSUITE</span></div>
+          <div class="stay-content"><div><h3>Settle into your stay.</h3><p>Explore our ensuite room options.</p></div><a class="round-link" routerLink="/rooms" aria-label="Explore ensuite rooms">↗</a></div>
+        </article>
+      </div>
+      <p class="photo-note">Room photography is illustrative. View the room list for current details and prices.</p>
+    </section>
+
+    <section class="journey-section" id="how-it-works" aria-labelledby="journey-heading">
+      <div class="journey-intro"><p class="eyebrow">LESS PLANNING. MORE LOOKING FORWARD.</p><h2 id="journey-heading">From browsing<br />to booked.</h2><p>A few simple steps between you and your next stay.</p><a class="quiet-link" [routerLink]="isLoggedIn() ? '/rooms' : '/register'">{{ isLoggedIn() ? 'Find your room' : 'Create your account' }} <span aria-hidden="true">↗</span></a></div>
+      <ol class="journey-steps">
+        <li><span class="step-number">01</span><div><h3>Find your room</h3><p>Log in to explore the rooms and choose the one that fits your plans.</p></div></li>
+        <li><span class="step-number">02</span><div><h3>Make time for your stay</h3><p>Choose your start and end dates, then submit your booking.</p></div></li>
+        <li><span class="step-number">03</span><div><h3>Pay and keep track</h3><p>Complete your payment online and view the status in your bookings.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="closing-section" aria-labelledby="closing-heading">
+      <div><p class="eyebrow">YOUR NEXT STAY IS CALLING</p><h2 id="closing-heading">Go on. Make room<br />for something good.</h2></div>
+      <a class="jeme-button light" routerLink="/rooms">{{ isAdmin() ? 'Manage rooms' : 'Find your room' }} <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div><a class="footer-brand" routerLink="/">JemeHotels<span aria-hidden="true">.</span></a><p>A good stay starts here.</p></div>
+    <nav aria-label="Footer navigation"><a routerLink="/rooms">Rooms</a><a [routerLink]="isLoggedIn() ? '/bookings' : '/login'">Bookings</a><a href="https://jemetechnologies.ng/" target="_blank" rel="noopener noreferrer">Jeme Technologies <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a></nav>
+    <p class="copyright">© 2026 JemeHotels</p>
+  </footer>
+</div>
