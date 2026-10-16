@@ -57,3 +57,4 @@ Record instructions from the user in this file from now onward. Append new instr
 
 - Add a side menu for logged-in non-admin users with navigation to rooms and bookings and an option to log out. Reuse the responsive menu while keeping admin-only links hidden.
 - Non-admin users must not see the Guests page link in either the desktop sidebar or mobile menu.
+- When booking a room, the start date must not be earlier than the current date. Allow today and future dates, enforce this in the calendar and form validation, and recheck on submission.

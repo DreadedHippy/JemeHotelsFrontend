@@ -68,8 +68,15 @@ export class Rooms {
   isInitializingPayment = signal(false);
   paymentError = signal('');
 
+  minimumStartDate = this.currentDay();
+
   bookingForm = new FormGroup({
-    startDate: new FormControl<Date | null>(null, Validators.required),
+    startDate: new FormControl<Date | null>(null, [Validators.required, (control) => {
+      const date = control.value;
+      if (date === null) return null;
+      if (!(date instanceof Date) || !Number.isFinite(date.getTime())) return { invalidStartDate: true };
+      return date < this.currentDay() ? { pastStartDate: true } : null;
+    }]),
     endDate: new FormControl<Date | null>(null, Validators.required),
   }, {
     validators: (form) => {
@@ -86,6 +93,7 @@ export class Rooms {
     if (!this.authSrv.isAuthenticated() || !this.canBook()) return;
     if (this.isBooking() || this.isInitializingPayment()) return;
     this.selectedRoom.set(room);
+    this.refreshMinimumDate();
     this.bookingForm.reset();
     this.bookingError.set('');
     this.bookedRoom.set(null);
@@ -99,6 +107,7 @@ export class Rooms {
     const room = this.selectedRoom();
     if (!room || this.isBooking() || this.bookedRoom()) return;
     this.bookingError.set('');
+    this.refreshMinimumDate();
     if (this.bookingForm.invalid) {
       this.bookingForm.markAllAsDirty();
       return;
@@ -199,6 +208,17 @@ export class Rooms {
         },
         error: () => this.addRoomError.set('Unable to add the room. Check the details and try again.'),
       });
+  }
+
+  refreshMinimumDate(): void {
+    this.minimumStartDate = this.currentDay();
+    this.bookingForm.controls.startDate.updateValueAndValidity();
+  }
+
+  private currentDay(): Date {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today;
   }
 
   private formatDate(date: Date): string {

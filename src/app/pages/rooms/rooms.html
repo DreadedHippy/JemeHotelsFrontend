@@ -84,9 +84,10 @@
     <fieldset [disabled]="isBooking()">
       <label for="booking-start">Start date</label>
       <p-datepicker inputId="booking-start" formControlName="startDate" dateFormat="yy-mm-dd"
+        [minDate]="minimumStartDate" (onShow)="refreshMinimumDate()"
         [showIcon]="true" [readonlyInput]="true" [fluid]="true" appendTo="body" />
       @if (bookingForm.controls.startDate.dirty && bookingForm.controls.startDate.invalid) {
-        <small role="alert">Choose a start date.</small>
+        <small role="alert">{{ bookingForm.controls.startDate.hasError('required') ? 'Choose a start date.' : 'Choose today or a later start date.' }}</small>
       }
 
       <label for="booking-end">End date</label>
