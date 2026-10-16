@@ -11,7 +11,7 @@
       <div class="search-input">
         <input #searchInput pInputText id="booking-search" type="search"
           [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)"
-          [placeholder]="isAdmin() ? 'Booking, room or guest ID' : 'Booking ID or start date'" />
+          [placeholder]="isAdmin() ? 'Booking ID, room number or guest username' : 'Booking ID or start date'" />
         @if (searchQuery()) {
           <p-button type="button" label="Clear" severity="secondary" [text]="true"
             (onClick)="searchQuery.set(''); searchInput.focus()" />
@@ -63,12 +63,8 @@
               <dd>{{ booking.roomNumber }}</dd>
             </div>
             <div>
-              <dt>Room ID</dt>
-              <dd>{{ booking.roomId }}</dd>
-            </div>
-            <div>
-              <dt>Guest ID</dt>
-              <dd>{{ booking.guestId }}</dd>
+              <dt>Guest username</dt>
+              <dd>{{ booking.guestUserName }}</dd>
             </div>
             <div>
               <dt>Duration</dt>

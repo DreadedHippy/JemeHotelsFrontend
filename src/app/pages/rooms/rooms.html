@@ -6,7 +6,7 @@
     @if (isAdmin()) {
       <div class="admin-actions">
         <a pButton routerLink="/guest"><span pButtonLabel>Manage guests</span></a>
-        <p-button type="button" label="Add room" (onClick)="openAddRoom()" [disabled]="isAddingRoom()" />
+        <p-button type="button" label="Add room" (onClick)="openAddRoom()" [disabled]="isAddingRoom() || isDeletingRoom()" />
       </div>
     }
   </header>
@@ -41,6 +41,10 @@
           @if (canBook()) {
             <p-button type="button" label="Book" [fluid]="true"
             (onClick)="openBooking(room)" [disabled]="isBooking() || isInitializingPayment()"/>
+          }
+          @if (isAdmin()) {
+            <p-button type="button" label="Delete room" severity="danger" [outlined]="true" [fluid]="true"
+              [disabled]="isDeletingRoom() || isAddingRoom()" (onClick)="confirmDeleteRoom(room)" />
           }
         </article>
       } @empty {
@@ -116,6 +120,24 @@
 }
 
 @if (isAdmin()) {
+  <p-dialog header="Delete room" [(visible)]="deleteRoomDialogVisible" [modal]="true"
+    [draggable]="false" [resizable]="false" [closable]="!isDeletingRoom()"
+    [closeOnEscape]="!isDeletingRoom()" [blockScroll]="true"
+    [style]="{ width: '26rem', maxWidth: 'calc(100vw - 2rem)' }">
+    <div class="delete-room-confirmation" [attr.aria-busy]="isDeletingRoom()">
+      <p>Delete room <strong>{{ roomToDelete()?.roomNumber }}</strong>? This will remove it from the room list.</p>
+      @if (deleteRoomError()) {
+        <p class="delete-room-error" role="alert">{{ deleteRoomError() }}</p>
+      }
+      <div class="delete-room-actions">
+        <p-button type="button" label="Cancel" severity="secondary" [outlined]="true" [autofocus]="true"
+          [disabled]="isDeletingRoom()" (onClick)="deleteRoomDialogVisible = false" />
+        <p-button type="button" label="Delete room" severity="danger" [loading]="isDeletingRoom()"
+          [disabled]="isDeletingRoom()" (onClick)="deleteRoom()" />
+      </div>
+    </div>
+  </p-dialog>
+
   <p-dialog header="Add room" [(visible)]="addRoomDialogVisible" [modal]="true"
     [draggable]="false" [resizable]="false" [closable]="!isAddingRoom()"
     [closeOnEscape]="!isAddingRoom()" [blockScroll]="true"

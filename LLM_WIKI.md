@@ -58,3 +58,5 @@ Record instructions from the user in this file from now onward. Append new instr
 - Add a side menu for logged-in non-admin users with navigation to rooms and bookings and an option to log out. Reuse the responsive menu while keeping admin-only links hidden.
 - Non-admin users must not see the Guests page link in either the desktop sidebar or mobile menu.
 - When booking a room, the start date must not be earlier than the current date. Allow today and future dates, enforce this in the calendar and form validation, and recheck on submission.
+- Admins can delete a room using `RoomService.deleteRoom(roomNumber)`. Provide an admin-only action, confirmation, loading/error feedback, success toast, and refresh the room list after deletion.
+- In admin bookings, display room number and `guestUserName` instead of room ID or guest ID. Update search to match these displayed fields; this supersedes the earlier requirement to display those IDs.

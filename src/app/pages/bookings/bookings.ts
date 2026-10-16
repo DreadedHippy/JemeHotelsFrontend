@@ -63,7 +63,7 @@ export class Bookings {
   ));
   filteredAdminBookings = computed(() => this.filterAndSort(
     this.adminBookings.hasValue() ? this.adminBookings.value() : [],
-    (booking) => `${booking.Id} ${booking.roomNumber} ${booking.roomId} ${booking.guestId}`,
+    (booking) => `${booking.Id} ${booking.roomNumber} ${booking.guestUserName}`,
   ));
   resultCount = computed(() => this.isAdmin() ? this.filteredAdminBookings().length : this.filteredBookings().length);
 

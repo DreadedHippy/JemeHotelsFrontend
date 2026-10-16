@@ -26,4 +26,8 @@ export class RoomService {
     return this.http.post<AddRoomResponse>(`${environment.baseUrl}/api/Rooms`, formData);
   }
 
+  deleteRoom(roomNumber: number) {
+    return this.http.delete(`${environment.baseUrl}/api/Rooms/${roomNumber}`);
+  }
+
 }

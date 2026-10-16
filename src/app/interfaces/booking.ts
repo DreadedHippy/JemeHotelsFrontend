@@ -25,4 +25,6 @@ export interface AdminBookingResult {
   roomId: string;
   isPaid: boolean;
   guestId: string;
+  guestUserName: string;
+  roomType: string;
 }

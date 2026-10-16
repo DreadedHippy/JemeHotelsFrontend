@@ -1,3 +1,15 @@
+.delete-room-confirmation {
+  p { line-height: 1.6; }
+  .delete-room-error { color: var(--p-red-600, #dc2626); font-size: 0.875rem; }
+  .delete-room-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+}
+
 .payment-prompt {
   overflow-wrap: anywhere;
 

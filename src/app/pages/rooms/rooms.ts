@@ -34,6 +34,10 @@ export class Rooms {
   addRoomDialogVisible = false;
   isAddingRoom = signal(false);
   addRoomError = signal('');
+  roomToDelete = signal<Room | null>(null);
+  deleteRoomDialogVisible = false;
+  isDeletingRoom = signal(false);
+  deleteRoomError = signal('');
   imageError = signal('');
   roomTypes = [
     { label: 'Basic', value: 'basic' },
@@ -168,7 +172,7 @@ export class Rooms {
   }
 
   openAddRoom(): void {
-    if (!this.authSrv.isAuthenticated() || !this.isAdmin() || this.isAddingRoom()) return;
+    if (!this.authSrv.isAuthenticated() || !this.isAdmin() || this.isAddingRoom() || this.isDeletingRoom()) return;
     this.addRoomForm.reset();
     this.addRoomError.set('');
     this.imageError.set('');
@@ -184,7 +188,7 @@ export class Rooms {
   }
 
   submitAddRoom(): void {
-    if (!this.authSrv.isAuthenticated() || !this.isAdmin() || this.isAddingRoom()) return;
+    if (!this.authSrv.isAuthenticated() || !this.isAdmin() || this.isAddingRoom() || this.isDeletingRoom()) return;
     this.addRoomError.set('');
     if (this.addRoomForm.invalid) {
       this.addRoomForm.markAllAsDirty();
@@ -207,6 +211,31 @@ export class Rooms {
           this.roomSrv.rooms.reload();
         },
         error: () => this.addRoomError.set('Unable to add the room. Check the details and try again.'),
+      });
+  }
+
+  confirmDeleteRoom(room: Room): void {
+    if (!this.authSrv.isAuthenticated() || !this.isAdmin() || this.isDeletingRoom() || this.isAddingRoom()) return;
+    this.roomToDelete.set(room);
+    this.deleteRoomError.set('');
+    this.deleteRoomDialogVisible = true;
+  }
+
+  deleteRoom(): void {
+    const room = this.roomToDelete();
+    if (!this.authSrv.isAuthenticated() || !this.isAdmin() || !room || this.isDeletingRoom() || this.isAddingRoom()) return;
+    this.deleteRoomError.set('');
+    this.isDeletingRoom.set(true);
+    this.roomSrv.deleteRoom(room.roomNumber)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.isDeletingRoom.set(false)))
+      .subscribe({
+        next: () => {
+          this.deleteRoomDialogVisible = false;
+          this.roomToDelete.set(null);
+          this.toast.showSuccess(`Room ${room.roomNumber} deleted successfully.`);
+          this.roomSrv.rooms.reload();
+        },
+        error: () => this.deleteRoomError.set('Unable to delete this room. Please try again.'),
       });
   }
 
