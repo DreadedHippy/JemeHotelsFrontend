@@ -12,6 +12,6 @@ import { AdminNavigation } from './components/admin-navigation/admin-navigation'
 })
 export class App {
   private auth = inject(AuthService);
-  protected isAdmin = computed(() => this.auth.isAuthenticated() && this.auth.role() === 'Admin');
+  protected isLoggedIn = computed(() => this.auth.isAuthenticated());
   protected readonly title = signal('JemeHotelsFrontend');
 }

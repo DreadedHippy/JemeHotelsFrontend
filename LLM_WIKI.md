@@ -52,3 +52,8 @@ Record instructions from the user in this file from now onward. Append new instr
 - Include a link to `https://jemetechnologies.ng/` on the landing page.
 - Add an admin-only side menu for quick navigation to bookings, rooms, guests, and the application's other relevant pages.
 - Fix the admin sidebar cutting off and leaving a white column when scrolling long pages; its host must stretch to the full page height so the viewport-height sidebar remains sticky within it.
+
+## 2026-10-16
+
+- Add a side menu for logged-in non-admin users with navigation to rooms and bookings and an option to log out. Reuse the responsive menu while keeping admin-only links hidden.
+- Non-admin users must not see the Guests page link in either the desktop sidebar or mobile menu.
