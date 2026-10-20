@@ -8,9 +8,11 @@ import { Guest as GuestService } from '../../services/guest';
 import { GuestResult } from '../../interfaces/guest';
 import { AuthService } from '../../services/auth';
 import { ToastService } from '../../services/toast';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { InputTextModule } from '@openng/optimus-ui/inputtext';
 
 @Component({
-  imports: [ButtonModule, DialogModule, RouterLink],
+  imports: [ButtonModule, DialogModule, RouterLink, ReactiveFormsModule, InputTextModule],
   selector: 'app-guest',
   styleUrl: './guest.scss',
   templateUrl: './guest.html',
@@ -25,7 +27,11 @@ export class Guest implements OnInit {
   loadError = signal('');
   pageNumber = signal(1);
   readonly pageSize = 20;
-  selectedGuest = signal<GuestResult | null>(null);
+  selectedUsername = signal('');
+  usernameError = signal('');
+  elevationForm = new FormGroup({
+    username: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.pattern(/\S/)] }),
+  });
   confirmationVisible = false;
   isElevating = signal(false);
   elevationError = signal('');
@@ -50,27 +56,39 @@ export class Guest implements OnInit {
       });
   }
 
-  confirmElevation(guest: GuestResult): void {
-    if (!this.isAdmin() || this.isElevating() || this.elevatedGuests()[guest.userName]) return;
-    this.selectedGuest.set(guest);
+  confirmElevation(): void {
+    if (!this.isAdmin() || this.isElevating()) return;
+    this.usernameError.set('');
+    if (this.elevationForm.invalid) {
+      this.elevationForm.markAllAsDirty();
+      return;
+    }
+    const username = this.elevationForm.controls.username.value.trim();
+    if (this.elevatedGuests()[username]) {
+      this.usernameError.set('Admin access has already been granted to this username.');
+      return;
+    }
+    this.selectedUsername.set(username);
     this.elevationError.set('');
     this.confirmationVisible = true;
   }
 
   elevateGuest(): void {
-    const guest = this.selectedGuest();
-    if (!this.isAdmin() || !guest || this.isElevating() || this.elevatedGuests()[guest.userName]) return;
+    const username = this.selectedUsername();
+    if (!this.isAdmin() || !username || this.isElevating() || this.elevatedGuests()[username]) return;
     this.isElevating.set(true);
     this.elevationError.set('');
-    this.guestSrv.elevateGuestToAdmin(guest.userName)
+    this.guestSrv.elevateGuestToAdmin(username)
       .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.isElevating.set(false)))
       .subscribe({
         next: () => {
-          this.elevatedGuests.update((guests) => ({ ...guests, [guest.userName]: true }));
+          this.elevatedGuests.update((guests) => ({ ...guests, [username]: true }));
           this.confirmationVisible = false;
-          this.toast.showSuccess(`${guest.userName} now has admin access.`);
+          this.elevationForm.reset();
+          this.usernameError.set('');
+          this.toast.showSuccess(`${username} now has admin access.`);
         },
-        error: () => this.elevationError.set('Unable to elevate this guest. Please try again.'),
+        error: () => this.elevationError.set('Unable to elevate this guest. Check the username and try again.'),
       });
   }
 

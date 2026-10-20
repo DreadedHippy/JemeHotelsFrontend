@@ -1,3 +1,18 @@
+.username-bar {
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--p-content-border-color, #e2e8f0);
+  border-radius: 1rem;
+  background: var(--p-content-background, #fff);
+
+  label { display: block; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 600; }
+  .username-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+  input { flex: 1 1 14rem; min-width: 0; }
+  p { margin: 0.5rem 0 0; font-size: 0.8125rem; line-height: 1.6; }
+  #username-help { color: var(--p-text-muted-color, #64748b); }
+  #username-error { min-height: 1.3rem; }
+}
+
 :host {
   display: block;
   min-height: 100svh;

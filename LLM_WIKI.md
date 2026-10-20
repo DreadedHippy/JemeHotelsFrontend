@@ -60,3 +60,7 @@ Record instructions from the user in this file from now onward. Append new instr
 - When booking a room, the start date must not be earlier than the current date. Allow today and future dates, enforce this in the calendar and form validation, and recheck on submission.
 - Admins can delete a room using `RoomService.deleteRoom(roomNumber)`. Provide an admin-only action, confirmation, loading/error feedback, success toast, and refresh the room list after deletion.
 - In admin bookings, display room number and `guestUserName` instead of room ID or guest ID. Update search to match these displayed fields; this supersedes the earlier requirement to display those IDs.
+
+## 2026-10-20
+
+- Move guest elevation to a username entry bar above the guest list with an "Elevate to admin" button. Remove elevation buttons from individual list items, preserving the confirmation and admin-only access checks.

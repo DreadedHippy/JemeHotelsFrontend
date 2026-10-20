@@ -6,6 +6,29 @@
     <a routerLink="/rooms">View rooms</a>
   </header>
 
+  <form class="username-bar" [formGroup]="elevationForm" (ngSubmit)="confirmElevation()" novalidate>
+    <label for="elevation-username">Guest username</label>
+    <div class="username-actions">
+      <input #usernameInput pInputText id="elevation-username" type="text" formControlName="username"
+        placeholder="Enter a username" autocomplete="off" [readonly]="isElevating()"
+        aria-describedby="username-help username-error"
+        [attr.aria-invalid]="elevationForm.controls.username.dirty && elevationForm.controls.username.invalid" />
+      @if (elevationForm.controls.username.value) {
+        <p-button type="button" label="Clear" severity="secondary" [text]="true" [disabled]="isElevating()"
+          (onClick)="elevationForm.reset(); usernameError.set(''); usernameInput.focus()" />
+      }
+      <p-button type="submit" label="Elevate to admin" [disabled]="isElevating()" />
+    </div>
+    <p id="username-help">Enter the exact username of the guest you want to elevate.</p>
+    <p id="username-error" class="elevation-error" role="status">
+      @if (elevationForm.controls.username.dirty && elevationForm.controls.username.invalid) {
+        Enter a username.
+      } @else if (usernameError()) {
+        {{ usernameError() }}
+      }
+    </p>
+  </form>
+
   @if (isLoading()) {
     <p role="status">Loading guests…</p>
   } @else if (loadError()) {
@@ -21,10 +44,6 @@
           </div>
           @if (elevatedGuests()[guest.userName]) {
             <span class="admin-status" role="status">Admin access granted</span>
-          } @else {
-            <p-button type="button" label="Elevate to admin" [disabled]="isElevating()"
-              (onClick)="confirmElevation(guest)"
-              />
           }
         </li>
       } @empty {
@@ -48,7 +67,7 @@
   [draggable]="false" [resizable]="false" [closable]="!isElevating()"
   [closeOnEscape]="!isElevating()" [blockScroll]="true"
   [style]="{ width: '28rem', maxWidth: 'calc(100vw - 2rem)' }">
-  <p class="confirmation-copy">Grant admin access to <strong>{{ selectedGuest()?.userName }}</strong>?
+  <p class="confirmation-copy">Grant admin access to <strong>{{ selectedUsername() }}</strong>?
     They will be able to add rooms and elevate other guests to admin.</p>
   @if (elevationError()) {
     <p class="elevation-error" role="alert">{{ elevationError() }}</p>
